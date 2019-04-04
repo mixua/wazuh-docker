@@ -18,8 +18,10 @@ WAZUH_MAJOR=3
 ##############################################################################
 # Customize elasticsearch ip
 ##############################################################################
+#CMD=`cat /proc/18/cmdline |sed 's/\x0/ /g'` && kill 18 && `$CMD` &
 if [ "$ELASTICSEARCH_KIBANA_IP" != "" ]; then
-  sed -i "s/elasticsearch:9200/$ELASTICSEARCH_KIBANA_IP:9200/" /usr/share/kibana/config/kibana.yml
+  URL=[\"$ELASTICSEARCH_KIBANA_IP\"]
+  sed -i -e "s@elasticsearch.hosts:.*@elasticsearch.hosts: $URL@g" /usr/share/kibana/config/kibana.yml
 fi
 
 if [ "$KIBANA_IP" != "" ]; then
