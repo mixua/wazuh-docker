@@ -50,9 +50,18 @@ sleep 2
 
 if [ "$LOGSTASH_OUTPUT" != "" ]; then
   >&2 echo "Customize Logstash ouput ip."
-  sed -i "s/elasticsearch:9200/$LOGSTASH_OUTPUT:9200/" /usr/share/logstash/pipeline/01-wazuh.conf
-  sed -i "s/elasticsearch:9200/$LOGSTASH_OUTPUT:9200/" /usr/share/logstash/config/logstash.yml 
+  sed -i "s/elasticsearch:9200/$LOGSTASH_OUTPUT/" /usr/share/logstash/pipeline/01-wazuh.conf
+  sed -i "s/elasticsearch:9200/$LOGSTASH_OUTPUT/" /usr/share/logstash/config/logstash.yml
 fi
+
+#if [ "$LOGSTASH_SSL_OUTPUT_ENABLE" != "" ]; then
+#  >&2 echo "Customize Logstash ouput ssl."
+#  URL=[\"http://$LOGSTASH_OUTPUT\"]
+#  CERT=\"/usr/share/logstash/config/ca.crt\"
+#  curl -o /usr/share/logstash/config/ca.crt https://letsencrypt.org/certs/isrgrootx1.pem.txt
+#  sed -i -e "s@hosts =>.*@hosts => $URL@g" /usr/share/logstash/pipeline/01-wazuh.conf
+#  sed -i "/document_type/acacert => $CERT" /usr/share/logstash/pipeline/01-wazuh.conf
+#fi
 
 ##############################################################################
 # Map environment variables to entries in logstash.yml.
