@@ -24,6 +24,10 @@ if [ "$ELASTICSEARCH_KIBANA_IP" != "" ]; then
   sed -i -e "s@elasticsearch.hosts:.*@elasticsearch.hosts: $URL@g" /usr/share/kibana/config/kibana.yml
 fi
 
+if [ "$XPACK_APM" == "false" ]; then
+  sed -i "s/true/false/" /usr/share/kibana/config/kibana.yml
+fi
+
 if [ "$KIBANA_IP" != "" ]; then
   kibana_ip="$KIBANA_IP"
 else
